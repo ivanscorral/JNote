@@ -38,8 +38,6 @@ import javax.swing.JOptionPane;
 
 public class Main extends JFrame {
 	
-	//HAY QUE ARREGLAR LOS SALTOS DE LINEA AL GUARDAR EL ARCHIVO
-
 	private JPanel contentPane;
 	private JMenuItem menuExit;
 	private String currentFilePath;
