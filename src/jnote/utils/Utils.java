@@ -37,8 +37,11 @@ public class Utils {
 			String line = "";
 			
 			while((line = bfr.readLine()) != null){
+				line = line + "\n";
 				result += line;
+				
 			}
+			result = result.substring(0, result.length()-1);
 			bfr.close();
 			fr.close();
 			

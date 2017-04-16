@@ -7,6 +7,7 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
+import javax.swing.text.BadLocationException;
 import javax.swing.undo.UndoManager;
 
 import jnote.utils.Utils;
@@ -180,6 +181,7 @@ public class Main extends JFrame {
 			menuUndo.setEnabled(false);
 		}
 		//Listeners...
+
 		
 		textArea.addMouseListener(new MouseListener() {
 			
@@ -256,6 +258,7 @@ public class Main extends JFrame {
 				menuCopy.setEnabled(false);
 				menuDelete.setEnabled(false);
 				
+				
 				if(manager.canUndo()){
 					menuUndo.setEnabled(true);
 				}else{
@@ -295,15 +298,16 @@ public class Main extends JFrame {
 		});
 		
 		menuSave.addActionListener(new ActionListener() {
-			
+			String text;
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				if(currentFilePath.equals("")){
 					chooser.showSaveDialog(null);
 					currentFilePath = chooser.getSelectedFile().getAbsolutePath();
-					isSaved = Utils.save(textArea.getText(), currentFilePath);
+					text = textArea.getText();
+					isSaved = Utils.save(text, currentFilePath);
 				}else{
-					isSaved = Utils.save(textArea.getText(), currentFilePath);
+					isSaved = Utils.save(text, currentFilePath);
 				}				
 			}
 		});
@@ -323,10 +327,12 @@ public class Main extends JFrame {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				String text;
 				if(isSaved){
 					chooser.showOpenDialog(null);
 					currentFilePath = chooser.getSelectedFile().getAbsolutePath();
-					textArea.setText(Utils.open(currentFilePath));
+					text = Utils.open(currentFilePath);
+					textArea.setText(text);
 					frame.setTitle(chooser.getSelectedFile().getName() + ": Bloc de notas");
 					isSaved = true;
 				}else{
@@ -334,7 +340,8 @@ public class Main extends JFrame {
 					if(option == 0){
 						chooser.showOpenDialog(null);
 						currentFilePath = chooser.getSelectedFile().getAbsolutePath();
-						textArea.setText(Utils.open(currentFilePath));
+						text = Utils.open(currentFilePath).replaceAll("\\\\n", System.getProperty("line.separator"));
+						textArea.setText(text);
 						frame.setTitle(chooser.getSelectedFile().getName() + ": Bloc de notas");
 						isSaved = true;
 					}
