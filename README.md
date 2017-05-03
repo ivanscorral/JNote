@@ -9,3 +9,6 @@ Clon del bloc de notas de Windows en Java (Swing). Las siguientes característic
   - Formato -> Ajuste de línea
   - Formato -> Fuente
   - Ver -> Barra de estado
+  
+  
+  falta por a�adir el salir sin guardar
