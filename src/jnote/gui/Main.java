@@ -66,11 +66,17 @@ public class Main extends JFrame {
 	 * Create the frame.
 	 */
 	public Main() {
-		JFrame frame = this;
+		JFrame frame = this; 
+		
+		//Set title and other variables to default values
+		
 		setTitle("Sin título: Bloc de notas");
 		currentFilePath = "";
 		isSaved = true;
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		
+		//set SO's default look and feel instead of Java's
+		
 		try {
 			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
 		} catch (ClassNotFoundException | InstantiationException | IllegalAccessException
@@ -78,6 +84,8 @@ public class Main extends JFrame {
 			e.printStackTrace();
 		}
 		setBounds(100, 100, 450, 300);
+		
+		//initialize elements
 		
 		JMenuBar menuBar = new JMenuBar();
 		setJMenuBar(menuBar);
@@ -137,14 +145,9 @@ public class Main extends JFrame {
 		JMenuItem menuDate = new JMenuItem("Hora y fecha");
 		menuEdicion.add(menuDate);
 
-		
-
-
-		
 		contentPane = new JPanel();
 		setContentPane(contentPane);
 		contentPane.setLayout(new GridLayout(0, 1, 0, 0));
-
 		
 		JTextArea textArea = new JTextArea();
 		textArea.setBorder(new EmptyBorder(0, 1, 0, 1));
@@ -156,10 +159,6 @@ public class Main extends JFrame {
 		
 		JFileChooser chooser = new JFileChooser();
 		chooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
-		
-		menuCut.setEnabled(false);
-		menuCopy.setEnabled(false);
-		menuDelete.setEnabled(false);
 		
 		JOptionPane notSavedPane = new JOptionPane();
 		String[] options = {"Sí", "No"};
@@ -175,6 +174,12 @@ public class Main extends JFrame {
 		JMenuItem menuAbout = new JMenuItem("Acerca de JNote");
 		menuHelp.add(menuAbout);
 		
+		//disable menu entries
+		
+				menuCut.setEnabled(false);
+				menuCopy.setEnabled(false);
+				menuDelete.setEnabled(false);
+		
 		if(!manager.canUndo()){
 			menuUndo.setEnabled(false);
 		}
@@ -182,6 +187,8 @@ public class Main extends JFrame {
 
 		
 		textArea.addMouseListener(new MouseListener() {
+			 
+			//check if there is selected text and then enable/disable menu buttons
 			
 			@Override
 			public void mouseReleased(MouseEvent e) {
@@ -224,6 +231,8 @@ public class Main extends JFrame {
 		});
 		
 		textArea.getDocument().addDocumentListener(new DocumentListener() {
+			
+			//enable or disable menu buttons based on existing text
 			
 			@Override
 			public void removeUpdate(DocumentEvent e) {
@@ -294,6 +303,8 @@ public class Main extends JFrame {
 				}
 			}
 		});
+		
+		//more listeners...
 		
 		menuSave.addActionListener(new ActionListener() {
 			String text;
