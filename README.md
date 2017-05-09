@@ -11,4 +11,3 @@ Clon del bloc de notas de Windows en Java (Swing). Las siguientes caracterÃ­stic
   - Ver -> Barra de estado
   
   
-  falta por añadir el salir sin guardar

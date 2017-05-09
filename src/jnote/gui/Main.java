@@ -25,6 +25,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -42,6 +44,7 @@ public class Main extends JFrame {
 	private JMenuItem menuExit;
 	private String currentFilePath;
 	private boolean isSaved;
+	private JOptionPane notSavedPane;
 	private UndoManager manager = new UndoManager();
 	private Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
 
@@ -66,14 +69,16 @@ public class Main extends JFrame {
 	 * Create the frame.
 	 */
 	public Main() {
-		JFrame frame = this; 
+		JFrame frame = this;
 		
 		//Set title and other variables to default values
 		
 		setTitle("Sin título: Bloc de notas");
 		currentFilePath = "";
 		isSaved = true;
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+		
+		
 		
 		//set SO's default look and feel instead of Java's
 		
@@ -160,7 +165,8 @@ public class Main extends JFrame {
 		JFileChooser chooser = new JFileChooser();
 		chooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
 		
-		JOptionPane notSavedPane = new JOptionPane();
+		notSavedPane = new JOptionPane();
+		
 		String[] options = {"Sí", "No"};
 		notSavedPane.setMessage("¿Seguro que quieres salir sin guardar?");
 		notSavedPane.setOptions(options);
@@ -183,6 +189,8 @@ public class Main extends JFrame {
 		if(!manager.canUndo()){
 			menuUndo.setEnabled(false);
 		}
+		
+		addWindowListener(wa);
 		//Listeners...
 
 		
@@ -512,7 +520,20 @@ public class Main extends JFrame {
 			}
 		});
 		
-		
+			
 	}
+	
+	WindowAdapter wa = new WindowAdapter() {
+		public void windowClosing(WindowEvent winEvt){
+			if(isSaved){
+				System.exit(0);
+			}else{
+				int option = notSavedPane.showConfirmDialog(null, "¿Seguro que salir sin guardar?");
+				if(option == 0){
+					System.exit(0);
+				}
+			}
+		}
+	};
 
 }
