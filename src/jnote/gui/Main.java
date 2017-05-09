@@ -394,7 +394,7 @@ public class Main extends JFrame {
 				if(isSaved){
 					frame.dispose();
 				}else{
-					int option = notSavedPane.showConfirmDialog(null, "¿Seguro que salir sin guardar?");
+					int option = notSavedPane.showConfirmDialog(null, "¿Seguro que quieres salir sin guardar?");
 					if(option == 0){
 						frame.dispose();
 					}
@@ -528,7 +528,7 @@ public class Main extends JFrame {
 			if(isSaved){
 				System.exit(0);
 			}else{
-				int option = notSavedPane.showConfirmDialog(null, "¿Seguro que salir sin guardar?");
+				int option = notSavedPane.showConfirmDialog(null, "¿Seguro que quieres salir sin guardar?");
 				if(option == 0){
 					System.exit(0);
 				}
